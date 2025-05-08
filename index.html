@@ -1,0 +1,3192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SP Enterprises - Apparel</title>
+  <style>
+    :root {
+      --primary-blue: #0d47a1;
+      --accent-orange: #ff6f00;
+      --bg-light: #f5f7fa;
+      --text-dark: #1a1a1a;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      color: var(--primary-blue);
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--primary-blue);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: var(--accent-orange);
+      color: white;
+    }
+
+    .mobile-toggle {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--white);
+      min-width: 160px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      z-index: 1;
+      border-radius: 5px;
+      top: 100%;
+      left: 0;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 0.8rem 1rem;
+      color: var(--primary-blue);
+      font-weight: 500;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--accent-orange);
+      color: white;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .hero {
+      background: linear-gradient(to right, #2196f3, #64b5f6);
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .hero h2 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Carousel Styles */
+    .carousel-section {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+      transform: translateX(100%);
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .carousel-slide .content {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: left;
+      color: var(--white);
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 10;
+    }
+
+    .carousel-slide h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .carousel-slide p {
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .book-now-btn {
+      padding: 0.8rem 1.5rem;
+      background: var(--accent-orange);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .book-now-btn:hover {
+      background: #e65c00;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .carousel-controls button {
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      transition: background 0.3s ease;
+    }
+
+    .carousel-controls button:hover {
+      background: var(--accent-orange);
+    }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--accent-orange);
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
+      border-top: 5px solid var(--accent-orange);
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .product-card .info {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .product-card h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      color: var(--primary-blue);
+    }
+
+    /* Specialty Designs Section */
+    .specialty-designs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px; /* Adds 3D perspective */
+    }
+
+    .laptop-mockup {
+      width: 800px;
+      height: 500px;
+      position: relative;
+      transform: rotateX(10deg) rotateY(5deg); /* 3D tilt for realism */
+      transform-style: preserve-3d;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .laptop-screen {
+      width: calc(100% - 40px);
+      height: calc(100% - 120px);
+      margin: 20px;
+      background: linear-gradient(145deg, #1a1a1a, #000); /* Realistic screen gradient */
+      border: 2px solid #333;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+
+    .laptop-body {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #d0d0d0, #a0a0a0); /* Silver body */
+      border-radius: 10px 10px 0 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .laptop-keyboard {
+      width: calc(100% - 40px);
+      height: 80px;
+      background: #333;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      border-radius: 5px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 4px;
+      padding: 8px;
+      z-index: 3;
+    }
+
+    .laptop-key {
+      background: #1a1a1a;
+      border-radius: 3px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .laptop-trackpad {
+      width: 200px;
+      height: 100px;
+      background: #4a4a4a;
+      border-radius: 5px;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+    }
+
+    .laptop-hinge {
+      width: 100%;
+      height: 10px;
+      background: #888;
+      position: absolute;
+      bottom: 0;
+      z-index: 0;
+    }
+
+    .laptop-carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .laptop-carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .laptop-carousel-slide.active {
+      opacity: 1;
+    }
+
+    .laptop-carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: var(--white);
+    }
+
+    .laptop-carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .laptop-carousel-controls button {
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: var(--white);
+      font-size: 1rem;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      transition: background 0.3s ease;
+    }
+
+    .laptop-carousel-controls button:hover {
+      background: var(--accent-orange);
+    }
+
+    .laptop-carousel-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .laptop-carousel-dot {
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .laptop-carousel-dot.active {
+      background: var(--accent-orange);
+    }
+
+    .contact-form {
+      background-color: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .contact-form label {
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .contact-form button {
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      background: var(--accent-orange);
+      color: white;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+   
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        background-color: var(--white);
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        display: none;
+        padding: 1rem 2rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+
+      .mobile-toggle {
+        display: block;
+        color: var(--primary-blue);
+      }
+
+      .dropdown-content {
+        position: static;
+        box-shadow: none;
+        background-color: #f9f9f9;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: none;
+      }
+
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>SP Enterprises</h1>
+    <div class="mobile-toggle" onclick="toggleMenu()">☰</div>
+    <nav>
+      <ul id="nav-list">
+        <li><a href="#home">Home</a></li>
+        <li class="dropdown">
+          <a href="#products" class="dropbtn">Products</a>
+          <div class="dropdown-content">
+            <a href="#mens-wear">Men's Wear</a>
+            <a href="#womens-fashion">Women's Fashion</a>
+            <a href="#kids-collection">Kids Collection</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href="#tshirts" class="dropbtn">T-Shirts</a>
+          <div class="dropdown-content">
+            <a href="#graphic-tees">Graphic Tees</a>
+            <a href="#plain-tees">Plain Tees</a>
+            <a href="#polo-shirts">Polo Shirts</a>
+            <a href="#custom-tees">Custom Tees</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href="#industrial" class="dropbtn">Industrial</a>
+          <div class="dropdown-content">
+            <a href="#workwear">Workwear</a>
+            <a href="#safety-gear">Safety Gear</a>
+            <a href="#protective-clothing">Protective Clothing</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href="#company" class="dropbtn">Company</a>
+          <div class="dropdown-content">
+            <a href="#about-us">About Us</a>
+            <a href="#our-mission">Our Mission</a>
+            <a href="#careers">Careers</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href="#uniform" class="dropbtn">Uniform</a>
+          <div class="dropdown-content">
+            <a href="#school-uniforms">School Uniforms</a>
+            <a href="#corporate-uniforms">Corporate Uniforms</a>
+            <a href="#hospitality-uniforms">Hospitality Uniforms</a>
+          </div>
+        </li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+  <h2>Elevate Your Style with SP Enterprises</h2>
+  <p><span id="typing-text"></span><span class="cursor">|</span></p>
+</section>
+
+<style>
+  .hero {
+    background: linear-gradient(to right, #2196f3, #64b5f6);
+    color: white;
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .hero h2 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    position: relative;
+    display: inline-block; /* Ensures cursor stays close to text */
+  }
+
+  .cursor {
+    font-size: 1.2rem;
+    animation: blink 0.7s step-end infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero h2 {
+      font-size: 2rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+    }
+
+    .cursor {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<script>
+  const text = "Discover stylish, high-quality apparel for all ages, made with precision and passion.";
+  const typingText = document.getElementById('typing-text');
+  let index = 0;
+
+  function type() {
+    if (index < text.length) {
+      typingText.textContent += text.charAt(index);
+      index++;
+      setTimeout(type, 100); // 100ms per character
+    } else {
+      document.querySelector('.cursor').style.animation = 'none'; // Stop cursor blinking
+      document.querySelector('.cursor').style.opacity = '0'; // Hide cursor
+    }
+  }
+
+  // Start typing effect when page loads
+  window.addEventListener('load', () => {
+    setTimeout(type, 500); // Slight delay for smooth start
+  });
+</script>
+
+<section class="stacked-carousel-section" id="stacked-carousel">
+  <div class="stacked-carousel">
+    <div class="stacked-carousel-slide active">
+      <img src="cloths1.jpg" alt="Men's Fashion" />
+      <div class="slide-content">
+        <h3>Men's Fashion</h3>
+        <p>Discover premium men's apparel crafted for style and comfort.</p>
+        <button class="shop-now-btn">Shop Now</button>
+      </div>
+    </div>
+    <div class="stacked-carousel-slide">
+      <img src="cloths2.png" alt="Women's Collection" />
+      <div class="slide-content">
+        <h3>Women's Collection</h3>
+        <p>Elegant and trendy designs for every occasion.</p>
+        <button class="shop-now-btn">Shop Now</button>
+      </div>
+    </div>
+    <div class="stacked-carousel-slide">
+      <img src="cloths3.jpg" alt="T-Shirts" />
+      <div class="slide-content">
+        <h3>Trendy T-Shirts</h3>
+        <p>Vibrant and bold T-shirts to express your unique style.</p>
+        <button class="shop-now-btn">Shop Now</button>
+      </div>
+    </div>
+  </div>
+  <div class="stacked-carousel-controls">
+    <button class="stacked-prev" aria-label="Previous slide">❮</button>
+    <button class="stacked-next" aria-label="Next slide">❯</button>
+  </div>
+  <div class="stacked-carousel-dots">
+    <span class="stacked-carousel-dot active" data-slide="0"></span>
+    <span class="stacked-carousel-dot" data-slide="1"></span>
+    <span class="stacked-carousel-dot" data-slide="2"></span>
+  </div>
+</section>
+
+<style>
+.stacked-carousel-section {
+  padding: 3rem 1rem;
+  max-width: 1300px;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-light);
+  z-index: 1; /* Lower than header to avoid overlap */
+}
+
+.stacked-carousel {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px; /* Adds depth for stacked effect */
+}
+
+.stacked-carousel-slide {
+  position: absolute;
+  width: 70%;
+  max-width: 900px;
+  height: 90%;
+  opacity: 0.4;
+  transform: translateX(100%) scale(0.8);
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+
+.stacked-carousel-slide.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  z-index: 3;
+}
+
+.stacked-carousel-slide.prev {
+  transform: translateX(-50%) scale(0.9);
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.stacked-carousel-slide.next {
+  transform: translateX(50%) scale(0.9);
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.stacked-carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85);
+  transition: filter 0.3s ease;
+}
+
+.stacked-carousel-slide:hover img {
+  filter: brightness(1);
+}
+
+.stacked-carousel-slide:hover {
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3); /* Enhanced shadow, no tilt */
+}
+
+.slide-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  padding: 2.5rem;
+  color: var(--white);
+  text-align: center;
+}
+
+.slide-content h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.slide-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.shop-now-btn {
+  padding: 1rem 2.5rem;
+  background: var(--accent-orange);
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.shop-now-btn:hover {
+  background: #e65c00;
+  box-shadow: 0 6px 20px rgba(255, 111, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.stacked-carousel-controls {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  z-index: 5;
+  padding: 0 1rem;
+}
+
+.stacked-carousel-controls button {
+  background: var(--primary-blue);
+  color: var(--white);
+  border: none;
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.stacked-carousel-controls button:hover {
+  background: var(--accent-orange);
+  transform: scale(1.1);
+}
+
+.stacked-carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 5;
+}
+
+.stacked-carousel-dot {
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.stacked-carousel-dot.active {
+  background: var(--accent-orange);
+  transform: scale(1.4);
+}
+
+.stacked-carousel-dot:hover {
+  background: var(--white);
+}
+
+@media (max-width: 768px) {
+  .stacked-carousel {
+    height: 400px;
+  }
+
+  .stacked-carousel-slide {
+    width: 85%;
+  }
+
+  .stacked-carousel-slide.active {
+    transform: translateX(0) scale(1);
+  }
+
+  .stacked-carousel-slide.prev,
+  .stacked-carousel-slide.next {
+    transform: translateX(0) scale(0.8);
+    opacity: 0.3;
+  }
+
+  .slide-content {
+    padding: 1.5rem;
+  }
+
+  .slide-content h3 {
+    font-size: 1.8rem;
+  }
+
+  .slide-content p {
+    font-size: 1rem;
+  }
+
+  .shop-now-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+
+  .stacked-carousel-controls button {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+
+  .stacked-carousel-dots {
+    bottom: 15px;
+    gap: 0.8rem;
+  }
+
+  .stacked-carousel-dot {
+    width: 12px;
+    height: 12px;
+  }
+}
+</style>
+
+<script>
+// Stacked Carousel functionality
+let currentStackedSlide = 0;
+const stackedSlides = document.querySelectorAll('.stacked-carousel-slide');
+const stackedDots = document.querySelectorAll('.stacked-carousel-dot');
+
+function updateStackedSlides() {
+  stackedSlides.forEach((slide, index) => {
+    slide.classList.remove('active', 'prev', 'next');
+    stackedDots[index].classList.remove('active');
+
+    if (index === currentStackedSlide) {
+      slide.classList.add('active');
+      stackedDots[index].classList.add('active');
+    } else if (index === (currentStackedSlide - 1 + stackedSlides.length) % stackedSlides.length) {
+      slide.classList.add('prev');
+    } else if (index === (currentStackedSlide + 1) % stackedSlides.length) {
+      slide.classList.add('next');
+    }
+  });
+}
+
+function nextStackedSlide() {
+  currentStackedSlide = (currentStackedSlide + 1) % stackedSlides.length;
+  updateStackedSlides();
+}
+
+function prevStackedSlide() {
+  currentStackedSlide = (currentStackedSlide - 1 + stackedSlides.length) % stackedSlides.length;
+  updateStackedSlides();
+}
+
+document.querySelector('.stacked-next').addEventListener('click', nextStackedSlide);
+document.querySelector('.stacked-prev').addEventListener('click', prevStackedSlide);
+
+stackedDots.forEach((dot, index) => {
+  dot.addEventListener('click', () => {
+    currentStackedSlide = index;
+    updateStackedSlides();
+  });
+});
+
+// Auto slide every 6 seconds
+setInterval(nextStackedSlide, 6000);
+
+// Initialize carousel
+updateStackedSlides();
+</script>
+
+
+ <section class="section" id="about-us">
+    <h2 style="text-align:center; color:var(--primary-blue); margin-bottom:2rem;">About SP Enterprises</h2>
+    <div class="about-us-container">
+      <div class="about-us-card">
+        <p>With over <strong>5 years of excellence</strong> in the apparel industry, SP Enterprises is a trusted name in <strong>B2B apparel solutions</strong>. Based in <strong>Tirupur</strong>, the knitwear capital of India, our state-of-the-art manufacturing unit delivers high-quality, stylish, and durable clothing for businesses worldwide. From custom uniforms to trendy casuals, we pride ourselves on precision, innovation, and customer satisfaction.</p>
+        <button class="learn-more-btn" aria-label="Learn more about SP Enterprises" onclick="openAboutModal()">Learn More</button>
+      </div>
+    </div>
+
+    <div class="about-modal" id="aboutModal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+      <div class="about-modal-content">
+        <span class="modal-close" onclick="closeAboutModal()" aria-label="Close modal">×</span>
+        <h3 id="modalTitle">About SP Enterprises</h3>
+        <div class="modal-body">
+          <p>SP Enterprises, established in 2020, is a leading B2B apparel manufacturer based in Tirupur, Tamil Nadu, known as the knitwear capital of India. With a commitment to quality, innovation, and sustainability, we specialize in producing a wide range of apparel, including corporate uniforms, industrial workwear, school uniforms, and trendy casual clothing.</p>
+          <p>Our state-of-the-art manufacturing facility is equipped with advanced machinery and staffed by skilled professionals, enabling us to deliver bulk orders with precision and consistency. We work closely with businesses worldwide, offering customized solutions tailored to their branding and functional needs.</p>
+          <h4>Our Mission</h4>
+          <p>To empower businesses with high-quality, stylish, and durable apparel that enhances their brand identity and meets their operational requirements.</p>
+          <h4>Why Choose Us?</h4>
+          <ul>
+            <li><strong>Quality Assurance</strong>: Rigorous quality checks at every stage of production.</li>
+            <li><strong>Customization</strong>: Tailored designs to match your brand’s vision.</li>
+            <li><strong>Sustainability</strong>: Eco-friendly materials and ethical manufacturing practices.</li>
+            <li><strong>Global Reach</strong>: Serving clients across India and international markets.</li>
+          </ul>
+          <h4>Our Expertise</h4>
+          <p>From corporate T-shirts and branded caps to specialized aprons and tracks, SP Enterprises offers a diverse portfolio. Our Tirupur facility ensures fast turnaround times without compromising on quality, making us a trusted partner for businesses in various industries.</p>
+          <p>Contact us today to learn how СП Enterprises can elevate your apparel needs!</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeAboutModal()">Close</button>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .about-us-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 0 1rem;
+    }
+
+    .about-us-card {
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      text-align: center;
+      border-top: 5px solid var(--accent-orange);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-us-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .about-us-card p {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .about-us-card p strong {
+      color: var(--primary-blue);
+    }
+
+    .learn-more-btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: var(--accent-orange);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .learn-more-btn:hover {
+      background: #e65c00;
+      transform: scale(1.05);
+    }
+
+    .learn-more-btn:focus {
+      outline: 2px solid var(--primary-blue);
+      outline-offset: 2px;
+    }
+
+    .about-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .about-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .about-modal-content {
+      background: var(--white);
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: translateY(50px);
+      transition: transform 0.3s ease;
+    }
+
+    .about-modal.active .about-modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.8rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--accent-orange);
+    }
+
+    .about-modal-content h3 {
+      font-size: 2rem;
+      color: var(--primary-blue);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .modal-body {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      line-height: 1.8;
+    }
+
+    .modal-body p {
+      margin-bottom: 1rem;
+    }
+
+    .modal-body h4 {
+      font-size: 1.4rem;
+      color: var(--primary-blue);
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .modal-body ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-body li {
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-close-btn {
+      display: block;
+      margin: 2rem auto 0;
+      padding: 0.8rem 2rem;
+      background: var(--accent-orange);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: #e65c00;
+      transform: scale(1.05);
+    }
+
+    .modal-close-btn:focus {
+      outline: 2px solid var(--primary-blue);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .about-us-card {
+        padding: 1.5rem;
+      }
+
+      .about-us-card p {
+        font-size: 1rem;
+      }
+
+      .learn-more-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      .about-modal-content {
+        width: 95%;
+        padding: 1.5rem;
+      }
+
+      .about-modal-content h3 {
+        font-size: 1.8rem;
+      }
+
+      .modal-body {
+        font-size: 1rem;
+      }
+
+      .modal-body h4 {
+        font-size: 1.3rem;
+      }
+
+      .modal-close {
+        font-size: 1.5rem;
+      }
+
+      .modal-close-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+  <script>
+    function openAboutModal() {
+      const modal = document.getElementById('aboutModal');
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('.about-modal-content').focus();
+    }
+
+    function closeAboutModal() {
+      const modal = document.getElementById('aboutModal');
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      document.querySelector('.learn-more-btn').focus();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('aboutModal').classList.contains('active')) {
+        closeAboutModal();
+      }
+    });
+
+    document.getElementById('aboutModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('aboutModal')) {
+        closeAboutModal();
+      }
+    });
+  </script>
+  
+
+  <section class="section" id="products">
+    <h2 style="text-align:center; color:var(--primary-blue); margin-bottom:2rem;">Our Products</h2>
+    <div class="products">
+      <div class="product-card">
+        <img src="cloths1.jpg" alt="Men's Wear" />
+        <div class="info">
+          <h3>Men's Wear</h3>
+          <p>Classy formals and bold casuals for every occasion.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="cloths2.png" alt="Women's Fashion" />
+        <div class="info">
+          <h3>Women's Fashion</h3>
+          <p>Trendy, chic, and comfortable attire to shine every day.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="cloths3.jpg" alt="Kids Collection" />
+        <div class="info">
+          <h3>Kids Collection</h3>
+          <p>Adorable and colorful designs to brighten your little one’s day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="section" id="collections">
+    <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 2rem;">Our Collections</h2>
+    <div class="collections-container">
+      <button class="scroll-left">❮</button>
+      <div class="collections-wrapper">
+        <div class="collection-card" onclick="openCorporateTShirtModal()">
+          <img src="cloths1.jpg" alt="Corporate T-Shirts" loading="lazy" />
+          <div class="info">
+            <h3>Corporate T-Shirts</h3>
+            <p>Professional, branded tees for office events and uniforms.</p>
+          </div>
+        </div>
+        <div class="collection-card" onclick="openIndustrialTShirtModal()">
+          <img src="cloths2.png" alt="Industrial T-Shirts" loading="lazy" />
+          <div class="info">
+            <h3>Industrial T-Shirts</h3>
+            <p>Durable workwear for tough environments.</p>
+          </div>
+        </div>
+        <div class="collection-card" onclick="openCapsModal()">
+          <img src="cloths3.jpg" alt="Branded Caps" loading="lazy" />
+          <div class="info">
+            <h3>Branded Caps</h3>
+            <p>Stylish caps with custom logos for teams.</p>
+          </div>
+        </div>
+        <div class="collection-card" onclick="openUniformsModal()">
+          <img src="cloths4.jpg" alt="Uniforms" loading="lazy" />
+          <div class="info">
+            <h3>Uniforms</h3>
+            <p>Custom uniforms for schools, corporates, and hospitality.</p>
+          </div>
+        </div>
+        <div class="collection-card">
+          <img src="cloths5.jpg" alt="Jersey Cards" loading="lazy" />
+          <div class="info">
+            <h3>Jersey Cards</h3>
+            <p>Unique, collectible jersey-inspired cards.</p>
+          </div>
+        </div>
+      </div>
+      <button class="scroll-right">❯</button>
+    </div>
+
+    <div class="modal" id="corporateTShirtModal" role="dialog" aria-labelledby="corporateTShirtModalTitle" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeCorporateTShirtModal()" aria-label="Close modal">×</span>
+        <h3 id="corporateTShirtModalTitle">Corporate T-Shirts Collection</h3>
+        <div class="modal-grid">
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Classic Cotton T-Shirt" loading="lazy" />
+            <h4>Classic Cotton T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Poly-Cotton Blend T-Shirt" loading="lazy" />
+            <h4>Poly-Cotton Blend T-Shirt</h4>
+            <p><strong>Material:</strong> 60% Cotton, 40% Polyester</p>
+            <p><strong>Sizes:</strong> XS, S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Dry-Fit T-Shirt" loading="lazy" />
+            <h4>Dry-Fit T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Polyester (Moisture-Wicking)</p>
+            <p><strong>Sizes:</strong> S, M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Organic Cotton T-Shirt" loading="lazy" />
+            <h4>Organic Cotton T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Organic Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Slim Fit T-Shirt" loading="lazy" />
+            <h4>Slim Fit T-Shirt</h4>
+            <p><strong>Material:</strong> 95% Cotton, 5% Spandex</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Pique Polo T-Shirt" loading="lazy" />
+            <h4>Pique Polo T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Cotton (Pique Knit)</p>
+            <p><strong>Sizes:</strong> S, M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="V-Neck T-Shirt" loading="lazy" />
+            <h4>V-Neck T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Cotton</p>
+            <p><strong>Sizes:</strong> XS, S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Recycled Poly T-Shirt" loading="lazy" />
+            <h4>Recycled Poly T-Shirt</h4>
+            <p><strong>Material:</strong> 50% Recycled Polyester, 50% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Heavy Duty T-Shirt" loading="lazy" />
+            <h4>Heavy Duty T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Cotton (Heavyweight)</p>
+            <p><strong>Sizes:</strong> M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Bamboo Blend T-Shirt" loading="lazy" />
+            <h4>Bamboo Blend T-Shirt</h4>
+            <p><strong>Material:</strong> 70% Bamboo, 30% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeCorporateTShirtModal()">Close</button>
+      </div>
+    </div>
+
+    <div class="modal" id="industrialTShirtModal" role="dialog" aria-labelledby="industrialTShirtModalTitle" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeIndustrialTShirtModal()" aria-label="Close modal">×</span>
+        <h3 id="industrialTShirtModalTitle">Industrial T-Shirts Collection</h3>
+        <div class="modal-grid">
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Heavy Duty Cotton T-Shirt" loading="lazy" />
+            <h4>Heavy Duty Cotton T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Cotton (Heavyweight)</p>
+            <p><strong>Sizes:</strong> M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="High-Visibility T-Shirt" loading="lazy" />
+            <h4>High-Visibility T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Polyester (Fluorescent)</p>
+            <p><strong>Sizes:</strong> S, M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Flame-Resistant T-Shirt" loading="lazy" />
+            <h4>Flame-Resistant T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Cotton (FR Treated)</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Moisture-Wicking T-Shirt" loading="lazy" />
+            <h4>Moisture-Wicking T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Polyester</p>
+            <p><strong>Sizes:</strong> S, M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Anti-Static T-Shirt" loading="lazy" />
+            <h4>Anti-Static T-Shirt</h4>
+            <p><strong>Material:</strong> 98% Cotton, 2% Carbon Fiber</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Durable Poly-Cotton T-Shirt" loading="lazy" />
+            <h4>Durable Poly-Cotton T-Shirt</h4>
+            <p><strong>Material:</strong> 65% Polyester, 35% Cotton</p>
+            <p><strong>Sizes:</strong> M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Long-Sleeve Work T-Shirt" loading="lazy" />
+            <h4>Long-Sleeve Work T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Reflective Trim T-Shirt" loading="lazy" />
+            <h4>Reflective Trim T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Polyester</p>
+            <p><strong>Sizes:</strong> S, M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Reinforced Seam T-Shirt" loading="lazy" />
+            <h4>Reinforced Seam T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Cotton (Double-Stitched)</p>
+            <p><strong>Sizes:</strong> M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="UV-Protective T-Shirt" loading="lazy" />
+            <h4>UV-Protective T-Shirt</h4>
+            <p><strong>Material:</strong> 100% Polyester (UPF 50+)</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeIndustrialTShirtModal()">Close</button>
+      </div>
+    </div>
+
+    <div class="modal" id="capsModal" role="dialog" aria-labelledby="capsModalTitle" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeCapsModal()" aria-label="Close modal">×</span>
+        <h3 id="capsModalTitle">Branded Caps Collection</h3>
+        <div class="modal-grid">
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Classic Baseball Cap" loading="lazy" />
+            <h4>Classic Baseball Cap</h4>
+            <p><strong>Material:</strong> 100% Cotton</p>
+            <p><strong>Sizes:</strong> One Size (Adjustable)</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Trucker Mesh Cap" loading="lazy" />
+            <h4>Trucker Mesh Cap</h4>
+            <p><strong>Material:</strong> 50% Cotton, 50% Polyester Mesh</p>
+            <p><strong>Sizes:</strong> One Size (Adjustable)</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Embroidered Logo Cap" loading="lazy" />
+            <h4>Embroidered Logo Cap</h4>
+            <p><strong>Material:</strong> 100% Cotton Twill</p>
+            <p><strong>Sizes:</strong> One Size (Adjustable)</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Snapback Cap" loading="lazy" />
+            <h4>Snapback Cap</h4>
+            <p><strong>Material:</strong> 80% Acrylic, 20% Wool</p>
+            <p><strong>Sizes:</strong> One Size (Adjustable)</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Flexfit Cap" loading="lazy" />
+            <h4>Flexfit Cap</h4>
+            <p><strong>Material:</strong> 98% Cotton, 2% Spandex</p>
+            <p><strong>Sizes:</strong> S/M, L/XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Bucket Hat" loading="lazy" />
+            <h4>Bucket Hat</h4>
+            <p><strong>Material:</strong> 100% Cotton</p>
+            <p><strong>Sizes:</strong> One Size</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Visor Cap" loading="lazy" />
+            <h4>Visor Cap</h4>
+            <p><strong>Material:</strong> 100% Cotton</p>
+            <p><strong>Sizes:</strong> One Size (Adjustable)</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Knit Beanie" loading="lazy" />
+            <h4>Knit Beanie</h4>
+            <p><strong>Material:</strong> 100% Acrylic</p>
+            <p><strong>Sizes:</strong> One Size</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Performance Cap" loading="lazy" />
+            <h4>Performance Cap</h4>
+            <p><strong>Material:</strong> 100% Polyester (Moisture-Wicking)</p>
+            <p><strong>Sizes:</strong> One Size (Adjustable)</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Flat Bill Cap" loading="lazy" />
+            <h4>Flat Bill Cap</h4>
+            <p><strong>Material:</strong> 80% Acrylic, 20% Wool</p>
+            <p><strong>Sizes:</strong> One Size (Adjustable)</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeCapsModal()">Close</button>
+      </div>
+    </div>
+
+    <div class="modal" id="uniformsModal" role="dialog" aria-labelledby="uniformsModalTitle" aria-hidden="true">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeUniformsModal()" aria-label="Close modal">×</span>
+        <h3 id="uniformsModalTitle">Uniforms Collection</h3>
+        <div class="modal-grid">
+          <div class="modal-card">
+            <img src="cloths4.jpg" alt="School Blazer Uniform" loading="lazy" />
+            <h4>School Blazer Uniform</h4>
+            <p><strong>Material:</strong> 65% Polyester, 35% Cotton</p>
+            <p><strong>Sizes:</strong> XS, S, M, L</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Corporate Shirt Uniform" loading="lazy" />
+            <h4>Corporate Shirt Uniform</h4>
+            <p><strong>Material:</strong> 100% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Hospitality Chef Uniform" loading="lazy" />
+            <h4>Hospitality Chef Uniform</h4>
+            <p><strong>Material:</strong> 65% Polyester, 35% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Security Guard Uniform" loading="lazy" />
+            <h4>Security Guard Uniform</h4>
+            <p><strong>Material:</strong> 100% Polyester</p>
+            <p><strong>Sizes:</strong> M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths4.jpg" alt="School Skirt Uniform" loading="lazy" />
+            <h4>School Skirt Uniform</h4>
+            <p><strong>Material:</strong> 65% Polyester, 35% Cotton</p>
+            <p><strong>Sizes:</strong> XS, S, M, L</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Corporate Pant Uniform" loading="lazy" />
+            <h4>Corporate Pant Uniform</h4>
+            <p><strong>Material:</strong> 65% Polyester, 35% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL, XXL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths2.png" alt="Housekeeping Uniform" loading="lazy" />
+            <h4>Housekeeping Uniform</h4>
+            <p><strong>Material:</strong> 100% Polyester</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths3.jpg" alt="Medical Scrub Uniform" loading="lazy" />
+            <h4>Medical Scrub Uniform</h4>
+            <p><strong>Material:</strong> 65% Polyester, 35% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths4.jpg" alt="School Sweater Uniform" loading="lazy" />
+            <h4>School Sweater Uniform</h4>
+            <p><strong>Material:</strong> 100% Acrylic</p>
+            <p><strong>Sizes:</strong> XS, S, M, L</p>
+          </div>
+          <div class="modal-card">
+            <img src="cloths1.jpg" alt="Retail Staff Uniform" loading="lazy" />
+            <h4>Retail Staff Uniform</h4>
+            <p><strong>Material:</strong> 65% Polyester, 35% Cotton</p>
+            <p><strong>Sizes:</strong> S, M, L, XL</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeUniformsModal()">Close</button>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .collections-container {
+      position: relative;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 50px;
+      overflow: hidden;
+    }
+
+    .collections-wrapper {
+      display: flex;
+      gap: 2rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 1rem 0;
+      scrollbar-width: none;
+    }
+
+    .collections-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .collection-card {
+      flex: 0 0 260px;
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      border-top: 5px solid var(--accent-orange);
+      cursor: pointer;
+    }
+
+    .collection-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .collection-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .collection-card .info {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .collection-card h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      color: var(--primary-blue);
+    }
+
+    .collection-card p {
+      font-size: 0.9rem;
+      color: var(--text-dark);
+    }
+
+    .scroll-left,
+    .scroll-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent-orange);
+      color: var(--white);
+      border: none;
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease, transform 0.2s ease;
+      z-index: 10;
+    }
+
+    .scroll-left {
+      left: 10px;
+    }
+
+    .scroll-right {
+      right: 10px;
+    }
+
+    .scroll-left:hover,
+    .scroll-right:hover {
+      background: #e65c00;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: 12px;
+      max-width: 900px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: translateY(50px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-content h3 {
+      font-size: 2rem;
+      color: var(--primary-blue);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.8rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--accent-orange);
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .modal-card {
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .modal-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 0.8rem;
+    }
+
+    .modal-card h4 {
+      font-size: 1.2rem;
+      color: var(--primary-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-card p {
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      margin: 0.3rem 0;
+    }
+
+    .modal-close-btn {
+      display: block;
+      margin: 1rem auto 0;
+      padding: 0.8rem 2rem;
+      background: var(--accent-orange);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: #e65c00;
+      transform: scale(1.05);
+    }
+
+    .modal-close-btn:focus {
+      outline: 2px solid var(--primary-blue);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .collections-container {
+        padding: 0 40px;
+      }
+
+      .collection-card {
+        flex: 0 0 200px;
+      }
+
+      .collection-card img {
+        height: 150px;
+      }
+
+      .scroll-left,
+      .scroll-right {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+      }
+
+      .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+      }
+
+      .modal-content h3 {
+        font-size: 1.8rem;
+      }
+
+      .modal-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+      }
+
+      .modal-card {
+        padding: 0.8rem;
+      }
+
+      .modal-card img {
+        height: 120px;
+      }
+
+      .modal-card h4 {
+        font-size: 1.1rem;
+      }
+
+      .modal-card p {
+        font-size: 0.8rem;
+      }
+
+      .modal-close {
+        font-size: 1.5rem;
+      }
+
+      .modal-close-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+
+  <script>
+    const collectionsWrapper = document.querySelector('.collections-wrapper');
+    const scrollLeftBtn = document.querySelector('.scroll-left');
+    const scrollRightBtn = document.querySelector('.scroll-right');
+
+    scrollRightBtn.addEventListener('click', () => {
+      collectionsWrapper.scrollBy({
+        left: 280,
+        behavior: 'smooth'
+      });
+    });
+
+    scrollLeftBtn.addEventListener('click', () => {
+      collectionsWrapper.scrollBy({
+        left: -280,
+        behavior: 'smooth'
+      });
+    });
+
+    function openModal(modalId, cardSelector) {
+      const modal = document.getElementById(modalId);
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('.modal-content').focus();
+    }
+
+    function closeModal(modalId, cardSelector) {
+      const modal = document.getElementById(modalId);
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      document.querySelector(cardSelector).focus();
+    }
+
+    function openCorporateTShirtModal() {
+      openModal('corporateTShirtModal', '.collection-card[onclick="openCorporateTShirtModal()"]');
+    }
+
+    function closeCorporateTShirtModal() {
+      closeModal('corporateTShirtModal', '.collection-card[onclick="openCorporateTShirtModal()"]');
+    }
+
+    function openIndustrialTShirtModal() {
+      openModal('industrialTShirtModal', '.collection-card[onclick="openIndustrialTShirtModal()"]');
+    }
+
+    function closeIndustrialTShirtModal() {
+      closeModal('industrialTShirtModal', '.collection-card[onclick="openIndustrialTShirtModal()"]');
+    }
+
+    function openCapsModal() {
+      openModal('capsModal', '.collection-card[onclick="openCapsModal()"]');
+    }
+
+    function closeCapsModal() {
+      closeModal('capsModal', '.collection-card[onclick="openCapsModal()"]');
+    }
+
+    function openUniformsModal() {
+      openModal('uniformsModal', '.collection-card[onclick="openUniformsModal()"]');
+    }
+
+    function closeUniformsModal() {
+      closeModal('uniformsModal', '.collection-card[onclick="openUniformsModal()"]');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (document.getElementById('corporateTShirtModal').classList.contains('active')) {
+          closeCorporateTShirtModal();
+        }
+        if (document.getElementById('industrialTShirtModal').classList.contains('active')) {
+          closeIndustrialTShirtModal();
+        }
+        if (document.getElementById('capsModal').classList.contains('active')) {
+          closeCapsModal();
+        }
+        if (document.getElementById('uniformsModal').classList.contains('active')) {
+          closeUniformsModal();
+        }
+      }
+    });
+
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          const modalId = modal.id;
+          if (modalId === 'corporateTShirtModal') closeCorporateTShirtModal();
+          if (modalId === 'industrialTShirtModal') closeIndustrialTShirtModal();
+          if (modalId === 'capsModal') closeCapsModal();
+          if (modalId === 'uniformsModal') closeUniformsModal();
+        }
+      });
+    });
+  </script>
+
+
+<!-- Specialized Apparel & Uniforms Section -->
+<section class="section" id="specialized-apparel">
+  <h2 style="text-align:center; color:var(--primary-blue); margin-bottom:2rem;">Specialized Apparel & Uniforms</h2>
+  <div class="specialized-container">
+    <button class="specialized-scroll-left">❮</button>
+    <div class="specialized-wrapper">
+      <div class="specialized-card">
+        <img src="cloths7.png" alt="Full Sleeve T-Shirts" />
+        <div class="info">
+          <h3>Full Sleeve T-Shirts</h3>
+          <p>Comfortable and stylish full sleeve tees for all seasons.</p>
+        </div>
+      </div>
+      <div class="specialized-card">
+        <img src="cloths6.png" alt="Aprons" />
+        <div class="info">
+          <h3>Aprons</h3>
+          <p>Durable and functional aprons for professional and home use.</p>
+        </div>
+      </div>
+      <div class="specialized-card">
+        <img src="cloths8.jpg" alt="Tracks for Men & Children" />
+        <div class="info">
+          <h3>Tracks for Men & Children</h3>
+          <p>Activewear tracks for sports and casual comfort.</p>
+        </div>
+      </div>
+      <div class="specialized-card">
+        <img src="cloths9.jpg" alt="School Uniforms" />
+        <div class="info">
+          <h3>School Uniforms</h3>
+          <p>High-quality, tailored uniforms for students.</p>
+        </div>
+      </div>
+      <div class="specialized-card">
+        <img src="cloths9.jpg" alt="School Uniforms" />
+        <div class="info">
+          <h3>School Uniforms</h3>
+          <p>High-quality, tailored uniforms for students.</p>
+        </div>
+      </div>
+      <div class="specialized-card">
+        <img src="cloths9.jpg" alt="School Uniforms" />
+        <div class="info">
+          <h3>School Uniforms</h3>
+          <p>High-quality, tailored uniforms for students.</p>
+        </div>
+      </div>
+    </div>
+    <button class="specialized-scroll-right">❯</button>
+  </div>
+</section>
+
+<style>
+  .specialized-container {
+    position: relative;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 60px; /* Increased padding for larger cards */
+    overflow: hidden;
+  }
+
+  .specialized-wrapper {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1.5rem 0;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .specialized-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  .specialized-card {
+    flex: 0 0 320px; /* Broader width */
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-top-color 0.3s ease;
+    border-top: 5px solid var(--accent-orange);
+  }
+
+  .specialized-card:hover {
+    transform: scale(1.05) rotate(2deg); /* Scale and slight rotation */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    border-top-color: #ff8c00; /* Brighter orange */
+  }
+
+  .specialized-card img {
+    width: 100%;
+    height: 250px; /* Taller image */
+    object-fit: cover;
+  }
+
+  .specialized-card .info {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .specialized-card h3 {
+    margin-bottom: 0.6rem;
+    font-size: 1.5rem; /* Larger title */
+    color: var(--primary-blue);
+  }
+
+  .specialized-card p {
+    font-size: 1rem; /* Larger description */
+    color: var(--text-dark);
+  }
+
+  .specialized-scroll-left,
+  .specialized-scroll-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--accent-orange);
+    color: var(--white);
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+    z-index: 10;
+  }
+
+  .specialized-scroll-left {
+    left: 15px;
+  }
+
+  .specialized-scroll-right {
+    right: 15px;
+  }
+
+  .specialized-scroll-left:hover,
+  .specialized-scroll-right:hover {
+    background: #e65c00;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .specialized-container {
+      padding: 0 50px;
+    }
+
+    .specialized-card {
+      flex: 0 0 240px; /* Slightly broader than original mobile size */
+    }
+
+    .specialized-card img {
+      height: 180px; /* Adjusted for mobile */
+    }
+
+    .specialized-card h3 {
+      font-size: 1.3rem;
+    }
+
+    .specialized-card p {
+      font-size: 0.9rem;
+    }
+
+    .specialized-scroll-left,
+    .specialized-scroll-right {
+      width: 35px;
+      height: 35px;
+      font-size: 1.2rem;
+    }
+  }
+</style>
+
+<script>
+  const specializedWrapper = document.querySelector('.specialized-wrapper');
+  const specializedScrollLeftBtn = document.querySelector('.specialized-scroll-left');
+  const specializedScrollRightBtn = document.querySelector('.specialized-scroll-right');
+
+  specializedScrollRightBtn.addEventListener('click', () => {
+    specializedWrapper.scrollBy({
+      left: 340, // Card width (320px) + gap (20px)
+      behavior: 'smooth'
+    });
+  });
+
+  specializedScrollLeftBtn.addEventListener('click', () => {
+    specializedWrapper.scrollBy({
+      left: -340, // Scroll left by the same amount
+      behavior: 'smooth'
+    });
+  });
+</script>
+
+<section class="specialty-designs" id="specialty">
+    <div class="specialty-background">
+        <img src="cloths10.png" alt="Background Pattern" class="background-image">
+    </div>
+    <div class="specialty-content">
+        <h2>Specialty Designs</h2>
+        <p>Our designs shine across all devices, delivering a seamless and stunning experience.</p>
+        <div class="device-showcase">
+            <div class="device device-laptop">
+                <div class="device-frame">
+                    <div class="device-screen">
+                        <img src="cloths10.png" alt="Website on Laptop" loading="lazy">
+                    </div>
+                </div>
+                <div class="device-stand"></div>
+            </div>
+            <div class="device device-tablet">
+                <div class="device-frame">
+                    <div class="device-screen">
+                        <img src="cloths11.jpg" alt="Website on Tablet" loading="lazy">
+                    </div>
+                    <div class="device-camera"></div>
+                </div>
+            </div>
+            <div class="device device-phone">
+                <div class="device-frame">
+                    <div class="device-screen">
+                        <img src="cloths12.jpg" alt="Website on Phone" loading="lazy">
+                    </div>
+                    <div class="device-notch"></div>
+                    <div class="device-button"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.specialty-designs {
+    position: relative;
+    padding: 5rem 1rem;
+    background: linear-gradient(180deg, rgba(250, 252, 255, 0.9) 0%, rgba(232, 236, 239, 0.9) 100%); /* Added slight transparency to blend with background */
+    text-align: center;
+    overflow: hidden;
+    max-width: 100vw;
+    box-sizing: border-box;
+}
+
+.specialty-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.2; /* Low intensity to avoid overshadowing */
+    filter: blur(5px); /* Slight blur to soften the background */
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(0); /* Initial position for parallax effect */
+}
+
+.specialty-content {
+    position: relative;
+    z-index: 1;
+}
+
+.specialty-designs h2 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+    letter-spacing: -0.8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added shadow for better readability */
+}
+
+.specialty-designs p {
+    font-size: 1.2rem;
+    color: black;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    font-weight: 300;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Added shadow for better readability */
+}
+
+.device-showcase {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    max-width: 1300px;
+    margin: 0 auto;
+    height: 500px;
+    gap: 20px;
+}
+
+/* General Device Styles */
+.device {
+    position: relative;
+    transition: transform 0.6s ease, filter 0.3s ease;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
+}
+
+.device-frame {
+    position: relative;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.device-screen {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #000;
+}
+
+.device-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.98;
+}
+
+/* Laptop (Centered) */
+.device-laptop {
+    width: 550px;
+    height: 330px;
+    transform: rotateY(0deg);
+}
+
+.device-laptop .device-frame {
+    width: 100%;
+    height: calc(100% - 40px);
+}
+
+.device-laptop .device-screen {
+    top: 8px;
+    left: 12px;
+    right: 12px;
+    bottom: 8px;
+}
+
+.device-laptop .device-stand {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(145deg, #d4d4d4, #a1a1a1);
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+}
+
+/* Tablet (Left Side, Fully Visible) */
+.device-tablet {
+    width: 280px;
+    height: 400px;
+    transform: rotateY(-5deg);
+}
+
+.device-tablet .device-frame {
+    width: 100%;
+    height: 100%;
+}
+
+.device-tablet .device-screen {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+}
+
+.device-tablet .device-camera {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    background: #111;
+    border-radius: 50%;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Phone (Right Side, Fully Visible) */
+.device-phone {
+    width: 160px;
+    height: 320px;
+    transform: rotateY(5deg);
+}
+
+.device-phone .device-frame {
+    width: 100%;
+    height: 100%;
+}
+
+.device-phone .device-screen {
+    top: 15px;
+    left: 6px;
+    right: 6px;
+    bottom: 15px;
+}
+
+.device-phone .device-notch {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 45px;
+    height: 15px;
+    background: #000;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.device-phone .device-button {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 25px;
+    background: #222;
+    border-radius: 50%;
+    border: 1px solid #444;
+}
+
+/* Hover Effects */
+.device:hover {
+    transform: translateY(-5px) scale(1.01);
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
+}
+
+/* Animation on Scroll */
+.device-showcase .device {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.device-showcase .device.animate {
+    opacity: 1;
+    transform: translateY(0) rotateY(var(--rotate));
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .specialty-designs {
+        padding: 3rem 0.5rem;
+    }
+
+    .specialty-designs h2 {
+        font-size: 2rem;
+    }
+
+    .specialty-designs p {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .device-showcase {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        gap: 30px;
+        padding: 1rem 0;
+    }
+
+    .device {
+        position: relative;
+        transform: none !important;
+        margin: 0;
+    }
+
+    .device-laptop {
+        width: 90%;
+        max-width: 400px;
+        height: 240px;
+    }
+
+    .device-laptop .device-stand {
+        height: 25px;
+    }
+
+    .device-tablet {
+        width: 70%;
+        max-width: 300px;
+        height: 400px;
+    }
+
+    .device-phone {
+        width: 50%;
+        max-width: 200px;
+        height: 350px;
+    }
+
+    .device-phone .device-notch {
+        width: 40px;
+        height: 12px;
+    }
+
+    .device-phone .device-button {
+        width: 20px;
+        height: 20px;
+    }
+
+    .background-image {
+        filter: blur(3px); /* Slightly less blur on mobile for better performance */
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Device animation
+    const devices = document.querySelectorAll('.device');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('animate');
+                    entry.target.style.setProperty('--rotate', entry.target.style.transform.match(/rotateY\(([^)]+)\)/)?.[1] || '0deg');
+                }, index * 200);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    devices.forEach(device => {
+        observer.observe(device);
+    });
+
+    // Parallax effect for background image
+    const backgroundImage = document.querySelector('.background-image');
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY;
+        const sectionTop = document.querySelector('.specialty-designs').offsetTop;
+        const sectionHeight = document.querySelector('.specialty-designs').offsetHeight;
+        const windowHeight = window.innerHeight;
+
+        // Calculate the relative scroll position within the section
+        if (scrollPosition + windowHeight > sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            const relativeScroll = (scrollPosition + windowHeight - sectionTop) / (sectionHeight + windowHeight);
+            const translateY = relativeScroll * 50; // Adjust the intensity of the parallax effect
+            backgroundImage.style.transform = `translateY(${translateY}px)`;
+        }
+    });
+});
+</script>
+
+
+  <!-- Appointment Section -->
+  <section class="appointment-section" id="appointment">
+    <div class="appointment-container">
+      <h2>Book Your Appointment</h2>
+      <p>Connect with our team to discuss your apparel needs or schedule a consultation at your convenience.</p>
+      <div class="appointment-buttons">
+        <a href="tel:+1234567890" class="appointment-btn" aria-label="Call us to schedule an appointment">Call Us</a>
+        <button class="appointment-btn" onclick="bookSlot()" aria-label="Book a slot for an appointment">Book Slot</button>
+      </div>
+    </div>
+  </section>
+  <style>
+    /* Appointment Section */
+    .appointment-section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .appointment-container {
+      background: linear-gradient(135deg, var(--white) 0%, #e8f0fe 100%);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .appointment-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--accent-orange);
+    }
+
+    .appointment-container h2 {
+      color: var(--primary-blue);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .appointment-container p {
+      color: var(--text-dark);
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .appointment-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .appointment-btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--white);
+      background: var(--accent-orange);
+      border-radius: 8px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .appointment-btn:hover {
+      background: #e65c00;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary-blue);
+    }
+
+    .appointment-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.3);
+    }
+
+    .appointment-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .appointment-section {
+        padding: 2rem 1rem;
+      }
+
+      .appointment-container {
+        padding: 2rem;
+      }
+
+      .appointment-container h2 {
+        font-size: 2rem;
+      }
+
+      .appointment-container p {
+        font-size: 1rem;
+      }
+
+      .appointment-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .appointment-btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+  <script>
+    // Simulate booking slot action (replace with actual booking logic)
+    function bookSlot() {
+      alert('Booking slot confirmed! You will be redirected to our booking page.');
+      // Replace with actual booking page URL or form logic
+      // window.location.href = 'https://your-booking-page.com';
+    }
+  </script>
+
+  
+
+
+
+  <section class="section" id="contact">
+    <h2 style="text-align:center; color:var(--primary-blue); margin-bottom:2rem;">Get in Touch</h2>
+    <form class="contact-form">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" rows="4" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+
+  <!-- Chat Box Section -->
+<div class="chat-box" id="chat-box">
+  <div class="chat-toggle" id="chat-toggle">
+    <span>💬</span>
+  </div>
+  <div class="chat-container" id="chat-container">
+    <div class="chat-header">
+      <h3>Instant AI Support</h3>
+      <span class="chat-status">Online</span>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="message bot-message">
+        <p>Hello! How can I assist you today?</p>
+      </div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chat-input" placeholder="Type your message..." />
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .chat-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  .chat-toggle {
+    background: var(--accent-orange);
+    color: var(--white);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+
+  .chat-toggle:hover {
+    background: #e65c00;
+    transform: scale(1.1);
+  }
+
+  .chat-container {
+    background: linear-gradient(145deg, #ffffff, #e6f0fa);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    max-width: 350px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    visibility: hidden;
+  }
+
+  .chat-container.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .chat-header {
+    background: var(--primary-blue);
+    color: var(--white);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .chat-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .chat-status {
+    font-size: 0.9rem;
+    background: var(--accent-orange);
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+  }
+
+  .chat-body {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: #f9f9f9;
+  }
+
+  .chat-body::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .chat-body::-webkit-scrollbar-thumb {
+    background: var(--accent-orange);
+    border-radius: 8px;
+  }
+
+  .message {
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    border-radius: 12px;
+    max-width: 80%;
+    animation: slideIn 0.3s ease;
+  }
+
+  .bot-message {
+    background: var(--primary-blue);
+    color: var(--white);
+    margin-right: auto;
+  }
+
+  .user-message {
+    background: var(--accent-orange);
+    color: var(--white);
+    margin-left: auto;
+  }
+
+  .chat-footer {
+    display: flex;
+    padding: 1rem;
+    background: var(--white);
+    border-top: 1px solid #ddd;
+  }
+
+  #chat-input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: border 0.3s ease;
+  }
+
+  #chat-input:focus {
+    border-color: var(--accent-orange);
+  }
+
+  #send-btn {
+    background: var(--accent-orange);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    margin-left: 0.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  #send-btn:hover {
+    background: #e65c00;
+    transform: scale(1.05);
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .chat-container {
+      width: 300px;
+      max-width: 300px;
+    }
+
+    .chat-toggle {
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  const chatToggle = document.getElementById('chat-toggle');
+  const chatContainer = document.getElementById('chat-container');
+  const chatInput = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const chatBody = document.getElementById('chat-body');
+
+  chatToggle.addEventListener('click', () => {
+    chatContainer.classList.toggle('active');
+  });
+
+  sendBtn.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  function sendMessage() {
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    const userMessage = document.createElement('div');
+    userMessage.classList.add('message', 'user-message');
+    userMessage.innerHTML = `<p>${message}</p>`;
+    chatBody.appendChild(userMessage);
+
+    let botResponse = 'How can I assist you further?';
+    const lowerMessage = message.toLowerCase();
+
+    if (lowerMessage.includes('name of the owner') || lowerMessage.includes('owner name')) {
+      botResponse = 'The owner of SP Enterprises is Mr. Senthamil Selvan.';
+    } else if (lowerMessage.includes('address')) {
+      botResponse = 'Please provide more details about the address you are inquiring about, or contact us directly for location information.';
+    }
+    if (lowerMessage.includes('contact details') || lowerMessage.includes('contact number')) {
+      botResponse = 'contact : 9791160564';
+    } else if (lowerMessage.includes('address')) {
+      botResponse = 'Please provide more details about the address you are inquiring about, or contact us directly for location information.';
+    }
+
+    setTimeout(() => {
+      const botMessage = document.createElement('div');
+      botMessage.classList.add('message', 'bot-message');
+      botMessage.innerHTML = `<p>${botResponse}</p>`;
+      chatBody.appendChild(botMessage);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }, 500);
+
+    chatInput.value = '';
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+</script>
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h3>SP Enterprises</h3>
+      <p>© 2025 SP Enterprises. All Rights Reserved.</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Contact</h4>
+      <h3>Mr.Senthamilselvan</h3>
+      <p>Phone: +91-9876543210</p>
+      <p>Email: contact@spenterprises.com</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Address</h4>
+      <p>No. 42, Tech Park Avenue,<br>Chennai, Tamil Nadu - 600113<br>India</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Find Us</h4>
+      <iframe
+        src="https://g.co/kgs/FWxBGbw"
+        width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <div class="footer-section">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="https://facebook.com" target="_blank"><img src="https://img.icons8.com/ios-filled/30/ffffff/facebook--v1.png" alt="Facebook"></a>
+        <a href="https://twitter.com" target="_blank"><img src="https://img.icons8.com/ios-filled/30/ffffff/twitter--v1.png" alt="Twitter"></a>
+        <a href="https://instagram.com" target="_blank"><img src="https://img.icons8.com/ios-filled/30/ffffff/instagram-new.png" alt="Instagram"></a>
+        <a href="https://linkedin.com" target="_blank"><img src="https://img.icons8.com/ios-filled/30/ffffff/linkedin.png" alt="LinkedIn"></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  :root {
+    --primary-blue: #007BFF; /* Example, you can customize */
+  }
+
+  footer {
+    background-color: var(--primary-blue);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+  }
+
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .footer-section {
+    flex: 1 1 200px;
+    min-width: 200px;
+  }
+
+  .footer-section h4,
+  .footer-section h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-section p {
+    margin: 0.3rem 0;
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .social-icons img {
+    filter: brightness(100%);
+    transition: transform 0.3s;
+  }
+
+  .social-icons img:hover {
+    transform: scale(1.2);
+  }
+</style>
+
+<!-- Move to Top Button -->
+<div class="move-to-top" id="move-to-top" title="Back to Top">
+  <span>↑</span>
+</div>
+
+<style>
+  .move-to-top {
+    position: fixed;
+    bottom: 80px; /* Above chat box */
+    right: 20px;
+    background: var(--accent-orange);
+    color: var(--white);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+    z-index: 1000; /* Ensure it’s above other elements */
+  }
+
+  .move-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .move-to-top:hover {
+    background: #e65c00; /* Darker orange on hover */
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .move-to-top {
+      width: 40px;
+      height: 40px;
+      font-size: 1.5rem;
+      bottom: 70px; /* Adjusted for mobile */
+      right: 15px;
+    }
+  }
+</style>
+
+<script>
+  const moveToTopBtn = document.getElementById('move-to-top');
+
+  // Show/hide button based on scroll position
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) { // Show after scrolling 100px
+      moveToTopBtn.classList.add('visible');
+    } else {
+      moveToTopBtn.classList.remove('visible');
+    }
+  });
+
+  // Smooth scroll to top on click
+  moveToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
+
+
+
+  <script>
+    function toggleMenu() {
+      const navList = document.getElementById('nav-list');
+      navList.classList.toggle('active');
+    }
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+          behavior: "smooth"
+        });
+        document.getElementById("nav-list").classList.remove("active");
+      });
+    });
+
+    // Mobile dropdown toggle
+    document.querySelectorAll('.dropdown .dropbtn').forEach(dropbtn => {
+      dropbtn.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          const parent = this.parentElement;
+          parent.classList.toggle('active');
+        }
+      });
+    });
+
+    // Main Carousel functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        dots[i].classList.remove('active');
+      });
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    document.querySelector('.next').addEventListener('click', nextSlide);
+    document.querySelector('.prev').addEventListener('click', prevSlide);
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+
+    // Auto slide every 5 seconds
+    setInterval(nextSlide, 5000);
+
+    // Laptop Carousel functionality
+    let currentLaptopSlide = 0;
+    const laptopSlides = document.querySelectorAll('.laptop-carousel-slide');
+    const laptopDots = document.querySelectorAll('.laptop-carousel-dot');
+
+    function showLaptopSlide(index) {
+      laptopSlides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        laptopDots[i].classList.remove('active');
+      });
+      laptopSlides[index].classList.add('active');
+      laptopDots[index].classList.add('active');
+    }
+
+    function nextLaptopSlide() {
+      currentLaptopSlide = (currentLaptopSlide + 1) % laptopSlides.length;
+      showLaptopSlide(currentLaptopSlide);
+    }
+
+    function prevLaptopSlide() {
+      currentLaptopSlide = (currentLaptopSlide - 1 + laptopSlides.length) % laptopSlides.length;
+      showLaptopSlide(currentLaptopSlide);
+    }
+
+    document.querySelector('.laptop-next').addEventListener('click', nextLaptopSlide);
+    document.querySelector('.laptop-prev').addEventListener('click', prevLaptopSlide);
+
+    laptopDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentLaptopSlide = index;
+        showLaptopSlide(currentLaptopSlide);
+      });
+    });
+
+    // Auto slide for laptop carousel every 5 seconds
+    setInterval(nextLaptopSlide, 5000);
+  </script>
+</body>
+</html>
